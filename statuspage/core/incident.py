@@ -174,13 +174,14 @@ class RealtimeIncident(Incident):
     data = {
             'incident': {
                 'name': self.name,
-                'status': self.status,
-                'message': self.message,
-                'wants_twitter_update': self.wants_twitter_update,
-                'impact_override' : self.impact_override,
-                'component_ids': self.component_ids_list
+                'body': self.message, # message is deprecated
                 }
            }
+
+    for attr in ('status', 'wants_twitter_update', 'impact_override', 'component_ids'):
+        val = getattr(self, attr)
+        if val is not None:
+            data['incident'][attr] = val
     
     try:
       response = postUrl(url, data)
