@@ -39,9 +39,12 @@ def patchUrl(url, data):
   except Exception as e:
     raise e
 
-def deleteUrl(url):
+def deleteUrl(url, data=None):
   try:
-    response = requests.delete(url, headers={'Authorization': 'OAuth {}'.format(settings.API_TOKEN, verify=True)})
+    if data is None:
+        response = requests.delete(url, headers={'Authorization': 'OAuth {}'.format(settings.API_TOKEN, verify=True)})
+    else:
+        response = requests.delete(url, json=data, headers={'Authorization': 'OAuth {}'.format(settings.API_TOKEN, verify=True)})
     return response
   except Exception as e:
     raise e
