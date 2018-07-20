@@ -1,5 +1,5 @@
 from statuspage import __version__
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(
     name='statuspage',
@@ -9,11 +9,7 @@ setup(
     author_email='lillaney@jhu.edu',
     url='https://github.io/kunallillaney/statuspage-py',
     license='Apache2.0',
-    packages=[
-      'statuspage',
-      'statuspage.core',
-      'statuspage.util'
-    ],
+    packages=find_packages(exclude=('tests')),
     setup_requires=[
     ],
     install_requires=[
