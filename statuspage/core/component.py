@@ -116,10 +116,11 @@ class Component(object):
     data = {
             'component' : {
                 'name': self.name,
-                'description': self.description,
-                'group_id' : self.group_id
+                'description': self.description
                 }
            }
+    if self.group_id:
+        data['group_id'] = self.group_id
     try:
       response = postUrl(url, data)
       assert(response.status_code == 201)
@@ -151,3 +152,25 @@ class Component(object):
       assert(response.status_code == 204)
     except AssertionError as e:
       raise ValueError("Could not delete Component. Returned status code {}. Content: {}".format(response.status_code, response.content))
+
+  def assign_page_access_groups(self, page_access_group_ids):
+    # url format : POST /pages/[page_id]/components/[component_id]/page_access_groups.json
+    url = 'https://{}/pages/{}/components/{}/page_access_groups.json'.format(settings.SITE_HOST, settings.PAGE_ID, self.id)
+    data = {
+            'page_access_group_ids' : page_access_group_ids
+           }
+    try:
+      response = postUrl(url, data)
+      assert(response.status_code == 200)
+    except AssertionError as e:
+      raise ValueError("Could not assign Page Access Groups to Component. Returned status code {}. Content: {}".format(response.status_code, response.content))
+
+  def remove_all_page_access_groups(self):
+    # url = DELETE /pages/[page_id]/components/[component_id]/page_access_groups.json
+    url = 'https://{}/pages/{}/components/{}/page_access_groups.json'.format(settings.SITE_HOST, settings.PAGE_ID, self.id)
+    try:
+      response = deleteUrl(url)
+      assert(response.status_code == 200)
+    except AssertionError as e:
+      raise ValueError("Could not remove all Page Access Groups from Component. Returned status code {}. Content: {}".format(response.status_code, response.content))
+
