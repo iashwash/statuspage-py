@@ -99,7 +99,7 @@ class PageAccessUser(object):
     for pau in pau_list:
       if pau.email == page_access_user_email:
         return pau
-    raise ValueError('Page Access User does not exist')
+    raise ValueError('PageAccessUser does not exist')
 
   @staticmethod
   def fromDict(page_access_user_dict):
@@ -177,24 +177,19 @@ class PageAccessUser(object):
       raise ValueError("Could not update PageAccessUser. Returned status code {}. Content: {}".format(response.status_code, response.content))
 
   def delete(self,):
-    # url = DELETE /pages/[page_id]/page_access_groups/[page_access_group_id].json
+    # url = DELETE /pages/[page_id]/page_access_users/[page_access_user_id].json
     url = 'https://{}/pages/{}/page_access_users/{}.json'.format(settings.SITE_HOST, settings.PAGE_ID, self.id)
-    data = {
-            'page_access_users' : {
-                # TODO: this data placeholder can probably be removed
-                }
-           }
     try:
-      response = deleteUrl(url, data)
-      assert(response.status_code == 200)
+      response = deleteUrl(url)
+      assert(response.status_code == 204)
     except AssertionError as e:
       raise ValueError("Could not delete PageAccessUser. Returned status code {}. Content: {}".format(response.status_code, response.content))
 
   def overwrite_components(self, component_ids):
-    # url = POST /pages/[page_id]/page_access_groups/[page_access_group_id]/components.json
-    url = 'https://{}/pages/{}/page_access_groups/{}/components.json'.format(settings.SITE_HOST, settings.PAGE_ID, self.id)
+    # url = POST /pages/[page_id]/page_access_users/[page_access_user_id]/components.json
+    url = 'https://{}/pages/{}/page_access_users/{}/components.json'.format(settings.SITE_HOST, settings.PAGE_ID, self.id)
     data = {
-            'page_access_group' : {
+            'page_access_user' : {
                 'component_ids': component_ids,
                 }
            }
@@ -202,7 +197,7 @@ class PageAccessUser(object):
       response = postUrl(url, data)
       assert(response.status_code == 200)
     except AssertionError as e:
-      raise ValueError("Could not overwrite PageAccessGroup components. Returned status code {}. Content: {}".format(response.status_code, response.content))
+      raise ValueError("Could not overwrite PageAccessUser components. Returned status code {}. Content: {}".format(response.status_code, response.content))
 
   def add_components(self, component_ids):
     # url = PATCH /pages/[page_id]/page_access_groups/[page_access_group_id]/components.json

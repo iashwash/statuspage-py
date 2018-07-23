@@ -91,7 +91,7 @@ class PageAccessGroup(object):
     for pag in pag_list:
       if pag.name == page_access_group_name:
         return pag
-    raise ValueError('Component does not exist')
+    raise ValueError('PageAccessGroup does not exist')
 
   @staticmethod
   def fromDict(page_access_group_dict):
@@ -213,7 +213,7 @@ class PageAccessGroup(object):
       response = deleteUrl(url)
       assert(response.status_code == 200)
     except AssertionError as e:
-      raise ValueError("Could not delete all PageAccessGroup components. Returned status code {}. Content: {}".format(response.status_code, response.content))
+      raise ValueError("Could not remove all PageAccessGroup components. Returned status code {}. Content: {}".format(response.status_code, response.content))
 
   def remove_component(self, component_id):
     # url =  DELETE /pages/[page_id]/page_access_groups/[page_access_group_id]/components/[component_id].json
@@ -222,4 +222,4 @@ class PageAccessGroup(object):
       response = deleteUrl(url)
       assert(response.status_code == 200)
     except AssertionError as e:
-      raise ValueError("Could not delete PageAccessGroup Component. Returned status code {}. Content: {}".format(response.status_code, response.content))
+      raise ValueError("Could not remove component from PageAccessGroup. Returned status code {}. Content: {}".format(response.status_code, response.content))
