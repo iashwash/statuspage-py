@@ -1,3 +1,4 @@
+# Copyright 2018 Issa Ashwash github.com/iashwash
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -43,7 +44,7 @@ class ComponentGroup(object):
   def components(self):
     return self._components
   
-  @status.setter
+  @components.setter
   def components(self, value):
     self._components = value
   
@@ -53,7 +54,7 @@ class ComponentGroup(object):
     for cg in cg_list:
       if cg.name == component_group:
         return cd
-    raise ValueError('Componenti Group does not exist')
+    raise ValueError('Component Group does not exist')
 
   @staticmethod
   def fromDict(cg_dict):
@@ -109,7 +110,7 @@ class ComponentGroup(object):
       response = patchUrl(url, data)
       assert(response.status_code == 200)
     except AssertionError as e:
-      raise ValueError("Could not update Component. Returned status code {}. Content: {}".format(response.status_code, response.content))
+      raise ValueError("Could not update Component Group. Returned status code {}. Content: {}".format(response.status_code, response.content))
 
   def delete(self):
     # url = DELETE /pages/[page_id]/component-groups/[component_group_id].json
