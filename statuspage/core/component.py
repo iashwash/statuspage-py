@@ -28,6 +28,7 @@ class Component(object):
     self._group_id = None
     self._updated_at = None
     self._description = None
+    self._automation_email = None
     
   @property
   def id(self):
@@ -77,6 +78,14 @@ class Component(object):
   def description(self, value):
     self._description = value
   
+  @property
+  def automation_email(self):
+    return self._automation_email
+  
+  @automation_email.setter
+  def automation_email(self, value):
+    self._automation_email = value
+  
   @staticmethod
   def fromName(component_name):
     component_list = Component.list()
@@ -93,6 +102,8 @@ class Component(object):
     component.description = component_dict['description']
     component.status = component_dict['status']
     component.group_id = component_dict['group_id']
+    if 'automation_email' in component_dict:
+      component.automation_email = component_dict['automation_email']
     # component.created_at = component_dict['created_at']
     # component.updated-at = component_dict['updated_at']
     return component

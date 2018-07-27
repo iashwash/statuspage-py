@@ -182,13 +182,11 @@ class PageAccessGroup(object):
     # url = POST /pages/[page_id]/page_access_groups/[page_access_group_id]/components.json
     url = 'https://{}/pages/{}/page_access_groups/{}/components.json'.format(settings.SITE_HOST, settings.PAGE_ID, self.id)
     data = {
-            'page_access_group' : {
-                'component_ids': component_ids,
-                }
+            'component_ids': component_ids,
            }
     try:
       response = postUrl(url, data)
-      assert(response.status_code == 200)
+      assert(response.status_code == 201)
     except AssertionError as e:
       raise ValueError("Could not overwrite PageAccessGroup components. Returned status code {}. Content: {}".format(response.status_code, response.content))
 
