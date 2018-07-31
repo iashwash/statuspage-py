@@ -138,6 +138,8 @@ class Component(object):
       self.status = response.json()['status']
       self.position = response.json()['position']
       self.id = response.json()['id']
+      if 'automation_email' in response.json():
+        self.automation_email = response.json()['automation_email']
     except AssertionError as e:
       raise ValueError("Could not create Component. Returned status code {}. Content: {}".format(response.status_code, response.content))
 
